@@ -52,6 +52,10 @@ public class ExecutarGames {
 		List<Game> listaDeJogos = new ArrayList<Game>();
 		List<Game> buscarJogo = new ArrayList<Game>();
 		List<Game> buscarJogoPorValor = new ArrayList<Game>();
+
+		List<Game> buscarJogoPorProdutora = new ArrayList<Game>();
+		List<Game> buscarJogoPorStatus = new ArrayList<Game>();
+		List<Game> buscarJogoPorDataDeLancamento = new ArrayList<Game>();
 		
 		listaDeJogos = daoGames.listarTodosOsGames();
 		System.out.println("Lista de Games.");
@@ -76,6 +80,57 @@ public class ExecutarGames {
 			
 			for (Game jogos : buscarJogoPorValor) {
 				System.out.println(jogos.toString());
+			}
+			
+		}
+		
+		//Retorno por produtora de jogos
+		System.out.println("-----------------");
+		System.out.println("Produtoras ... ");
+		
+		buscarJogoPorProdutora = daoGames.buscarJogosPorProdutora("nintendo");
+		
+		if ( !buscarJogoPorProdutora.isEmpty()) {
+			
+			for (Game jogo : buscarJogoPorProdutora) {
+				System.out.println(jogo.toString());
+			}
+			
+		}
+		
+		
+		//Retorno por produtora de jogos
+		System.out.println("-----------------");
+		System.out.println("Status do Jogo ... ");
+		
+		Boolean status = false;
+		
+		buscarJogoPorStatus = daoGames.buscarJogosPorStatusJogo(status);
+		
+		if ( !buscarJogoPorStatus.isEmpty()) {
+			
+			for (Game jogo : buscarJogoPorStatus) {
+				System.out.println(jogo.toString());
+			}
+			
+		}
+		
+		
+		//Retorno por data de lancamento
+		System.out.println("-----------------");
+		System.out.println("Jogos Por data de lancamento");
+		
+		LocalDate dataInicio, dataFim;
+		
+		dataInicio = LocalDate.of(1988, 1, 1);
+		dataFim = LocalDate.of(1988, 12, 31);
+		
+		buscarJogoPorDataDeLancamento = daoGames.buscarJogoPorDataDeLancamento(dataInicio, dataFim);
+		
+		if ( !buscarJogoPorDataDeLancamento.isEmpty()) {
+			
+			for (Game jogo : buscarJogoPorDataDeLancamento) {
+				System.out.println(jogo.toString());
 			}
 			
 		}

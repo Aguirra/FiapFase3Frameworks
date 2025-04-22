@@ -1,5 +1,6 @@
 package br.com.fiap.dao;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,8 +80,56 @@ public class GameDAO {
 	//Buscar por valores 
 	public List<Game> buscarJogosPorValores(Double valorInicial, Double valorFinal) {
 		
-String jpqlQuery = "SELECT g FROM Game g WHERE g.valor BETWEEN :valorInicial AND :valorFinal"
-		+ " ORDER BY g.titulo ASC";
+		String jpqlQuery = "SELECT g FROM Game g WHERE g.valor BETWEEN :valorInicial AND :valorFinal"
+				+ " ORDER BY g.titulo ASC";
+		
+		List<Game> retornoJogo = this.em.createQuery(jpqlQuery, Game.class)
+				.setParameter("valorInicial", valorInicial)
+				.setParameter("valorFinal", valorFinal)
+				.getResultList();
+				
+		if (retornoJogo.isEmpty() ) {
+			return new ArrayList<Game>();
+		}
+		return retornoJogo;
+	}
+	
+	//Listar jogos de uma produtora
+	public List<Game> buscarJogosPorProdutora (String nomeProdutora) {
+		
+		String jpqlQuery = "SELECT g FROM Game g WHERE upper(g.produtora) = :nomeProdutora ORDER BY g.dataLancamento";
+		List<Game> retornoJogo = this.em.createQuery(jpqlQuery, Game.class)
+				.setParameter("nomeProdutora", nomeProdutora.toUpperCase())
+				.getResultList();
+				
+		if (retornoJogo.isEmpty() ) {
+			return new ArrayList<Game>();
+		}
+		return retornoJogo;
+		
+	}
+	
+	//Listar jogos que foram e nao foram finalizados
+	public List<Game> buscarJogosPorStatusJogo (Boolean statusJogo) {
+		
+		String jpqlQuery = "SELECT g FROM Game g WHERE g.finalizado = :statusJogo ORDER BY g.dataLancamento";
+		List<Game> retornoJogo = this.em.createQuery(jpqlQuery, Game.class)
+				.setParameter("statusJogo", statusJogo)
+				.getResultList();
+				
+		if (retornoJogo.isEmpty() ) {
+			return new ArrayList<Game>();
+		}
+		return retornoJogo;
+		
+	}
+	
+	
+	//Buscar entre uma data de lancamento
+	public List<Game> buscarJogoPorDataDeLancamento(LocalDate valorInicial, LocalDate valorFinal) {
+		
+		String jpqlQuery = "SELECT g FROM Game g WHERE g.dataLancamento BETWEEN :valorInicial AND :valorFinal"
+				+ " ORDER BY g.titulo ASC";
 		
 		List<Game> retornoJogo = this.em.createQuery(jpqlQuery, Game.class)
 				.setParameter("valorInicial", valorInicial)
