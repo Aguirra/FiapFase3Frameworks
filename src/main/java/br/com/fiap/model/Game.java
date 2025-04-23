@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -30,12 +31,15 @@ public class Game {
 	private Double valor;
 	private String produtora;
 	private Boolean finalizado;
-	private String categoria;
+	//private String categoria;
+	
+	@ManyToOne
+	private Categoria categoria;
 	
 	public Game () {} 
 	
 	public Game(String titulo, LocalDate dataLancamento, Double valor, String produtora, Boolean finalizado,
-			String categoria) {
+			Categoria categoria) {
 		this.titulo = titulo;
 		this.dataLancamento = dataLancamento;
 		this.valor = valor;
@@ -80,18 +84,23 @@ public class Game {
 	public void setFinalizado(Boolean finalizado) {
 		this.finalizado = finalizado;
 	}
-	public String getCategoria() {
+	public Categoria getCategoria() {
 		return categoria;
 	}
-	public void setCategoria(String categoria) {
+	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
 
-	@Override
-	public String toString() {
-		return "Game [id=" + id + ", titulo=" + titulo + ", dataLancamento=" + dataLancamento + ", valor=" + valor
-				+ ", produtora=" + produtora + ", finalizado=" + finalizado + ", categoria=" + categoria + "]";
-	} 
+	  @Override
+	    public String toString() {
+	        return "ID:" + this.id + ""
+	                + "\nTITULO: " + this.titulo + ""
+	                + "\nPRODUTORA: " + this.produtora + ""
+	                + "\nCATEGORIA: " + this.categoria.getNomeCategoria() + ""
+	                + "\nLANÇAMENTO: " + this.dataLancamento + ""
+	                + "\nFINALIZADO: " + this.finalizado + ""
+	                + "\nVALOR: " + this.valor;
+	    }
 	
 	
 }
