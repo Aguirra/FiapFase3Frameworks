@@ -1,5 +1,6 @@
 package br.com.fiap.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,16 +20,21 @@ public class Categoria {
 			name = "TBL_CATEGORIA_SEQ",
 			sequenceName = "TBL_CATEGORIA_SEQ",
 			allocationSize = 1)
+	@Column(name = "nr_sequencia")
 	private int id;
 	
+	@Column(name="nome_categoria")
 	private String nomeCategoria;
+	
+	private Boolean ativo;
 	
 	
 	public Categoria () {}
 
 
-	public Categoria(String nomeCategoria) {
+	public Categoria(String nomeCategoria, Boolean status) {
 		this.nomeCategoria = nomeCategoria;
+		this.ativo = status;
 	}
 
 
@@ -51,13 +57,20 @@ public class Categoria {
 		this.nomeCategoria = nomeCategoria;
 	}
 
+	public Boolean getStatus() {
+		return ativo;
+	}
+
+
+	public void setStatus(Boolean status) {
+		this.ativo = status;
+	}
+
 
 	@Override
 	public String toString() {
-		return "Categoria [id=" + id + ", nomeCategoria=" + nomeCategoria + "]";
-	} 
-	
-	
-	
+		return "Categoria [id=" + id + ", nomeCategoria=" + nomeCategoria + ", status=" + ativo + "]";
+	}
+
 	
 }

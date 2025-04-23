@@ -20,9 +20,9 @@ public class ExecutaGameCategoria {
 		
 		//criando uma categoria
 		//Categoria categoria = new Categoria();
-		//categoria.setId(3);
+		//categoria.setId(6);
 		
-		//Game game1 = new Game("Mario Brother`s", LocalDate.of(1992, 8, 1), 350.98, "Nintendo", true, categoria);
+		//Game game1 = new Game("Zelda - Ocarina of Time", LocalDate.of(1992, 8, 1), 159.98, "Nintendo", true, categoria);
 		List<Game> listarJogos = new ArrayList<Game>();
 		
 		//criando uma instancia de dao categoria 
@@ -34,12 +34,14 @@ public class ExecutaGameCategoria {
 		
 		//criando a categoria 
 		//categoriaDAO.salvarCategoria(categoria);
+		
+		//categoriaDAO.ativarInativarCategoria(categoria, false);
 		//gameDAO.salvarRegistros(game1);
 		
 		// Efetuar o commit para sincronismo
 		em.getTransaction().commit();
 		
-		
+	
 		listarJogos = gameDAO.listarTodosOsGames();
 		
 		for (Game jogo : listarJogos) {
@@ -49,12 +51,7 @@ public class ExecutaGameCategoria {
 			
 		}
 		
-
-		
 		em.close();
-		
-		
-		
 
 	}
 

@@ -49,7 +49,7 @@ public class GameDAO {
 	//buscar todos os Games
 	public List<Game> listarTodosOsGames() {
 		
-		String jpqlQuery = "SELECT g FROM Game g ORDER BY g.titulo ASC";
+		String jpqlQuery = "SELECT g FROM Game g WHERE g.categoria.ativo = true ORDER BY g.titulo ASC";
 		
 		List<Game> retornoListaGames = this.em.createQuery(jpqlQuery, Game.class).getResultList();
 		

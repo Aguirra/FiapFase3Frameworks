@@ -2,6 +2,8 @@ package br.com.fiap.model;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.DialectOverride.Where;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,6 +36,7 @@ public class Game {
 	//private String categoria;
 	
 	@ManyToOne
+	
 	private Categoria categoria;
 	
 	public Game () {} 
