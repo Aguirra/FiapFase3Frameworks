@@ -1,10 +1,14 @@
 package br.com.fiap.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -27,10 +31,12 @@ public class Categoria {
 	private String nomeCategoria;
 	
 	private Boolean ativo;
+
+	@OneToMany(mappedBy = "categoria" , fetch = FetchType.EAGER)
+	private List<Game> game; 
 	
 	
 	public Categoria () {}
-
 
 	public Categoria(String nomeCategoria, Boolean status) {
 		this.nomeCategoria = nomeCategoria;
@@ -66,11 +72,29 @@ public class Categoria {
 		this.ativo = status;
 	}
 
+	
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public List<Game> getGame() {
+		return game;
+	}
+
+	public void setGame(List<Game> game) {
+		this.game = game;
+	}
 
 	@Override
 	public String toString() {
-		return "Categoria [id=" + id + ", nomeCategoria=" + nomeCategoria + ", status=" + ativo + "]";
+		return "Categoria [id=" + id + ", nomeCategoria=" + nomeCategoria + ", ativo=" + ativo + ", game=" + game + "]";
 	}
 
+	
+	
 	
 }

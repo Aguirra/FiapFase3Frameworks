@@ -2,6 +2,7 @@ package br.com.fiap.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import br.com.fiap.dao.CategoriaDAO;
@@ -19,14 +20,14 @@ public class ExecutaGameCategoria {
 		EntityManager em = Conexao.getEntityManager();
 		
 		//criando uma categoria
-		//Categoria categoria = new Categoria();
-		//categoria.setId(6);
+		Categoria categoria = new Categoria();
+		categoria.setId(6);
 		
 		//Game game1 = new Game("Zelda - Ocarina of Time", LocalDate.of(1992, 8, 1), 159.98, "Nintendo", true, categoria);
 		List<Game> listarJogos = new ArrayList<Game>();
 		
 		//criando uma instancia de dao categoria 
-		//CategoriaDAO categoriaDAO = new CategoriaDAO(em);
+		CategoriaDAO categoriaDAO = new CategoriaDAO(em);
 		GameDAO gameDAO = new GameDAO(em);
 		
 		//Iniciar transacoes sobre o banco de dados
@@ -50,6 +51,15 @@ public class ExecutaGameCategoria {
 			System.out.println(jogo.toString());
 			
 		}
+		
+		//Listas de Jogos por categora
+		System.out.println("------------------");
+		System.out.println("------------------");
+		System.out.println("------------------");
+		
+		Categoria listarJogosPorCategoria = categoriaDAO.retornoJogosPorCategoria(categoria);
+		
+		System.out.println(listarJogosPorCategoria.toString());
 		
 		em.close();
 

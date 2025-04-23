@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -36,7 +37,7 @@ public class Game {
 	//private String categoria;
 	
 	@ManyToOne
-	
+	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
 	
 	public Game () {} 

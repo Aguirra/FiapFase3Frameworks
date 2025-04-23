@@ -30,6 +30,12 @@ public class CategoriaDAO {
 		
 	}
 	
+	public Categoria retornoJogosPorCategoria(Categoria categoria) {
+		
+		return this.em.find(Categoria.class, categoria.getId());
+
+	}
+	
 	public void excluirRegistro(Categoria categoria) {
 		Categoria excluirCategoria = this.em.find(Categoria.class, categoria);
 		if (excluirCategoria != null) {
