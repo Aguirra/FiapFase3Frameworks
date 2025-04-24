@@ -7,9 +7,6 @@ import br.com.fiap.model.Categoria;
 import jakarta.persistence.EntityManager;
 
 
-
-
-
 public class CategoriaDAO {
 
 	private EntityManager em;

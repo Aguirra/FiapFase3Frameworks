@@ -32,7 +32,14 @@ public class Game {
 	@Column(name= "data_lancamento")
 	private LocalDate dataLancamento;
 	private Double valor;
-	private String produtora;
+	
+	
+	//private String produtora;
+	
+	@ManyToOne
+	@JoinColumn(name = "produtora_id")
+	private Produtora produtora;
+	
 	private Boolean finalizado;
 	//private String categoria;
 	
@@ -42,7 +49,7 @@ public class Game {
 	
 	public Game () {} 
 	
-	public Game(String titulo, LocalDate dataLancamento, Double valor, String produtora, Boolean finalizado,
+	public Game(String titulo, LocalDate dataLancamento, Double valor, Produtora produtora, Boolean finalizado,
 			Categoria categoria) {
 		this.titulo = titulo;
 		this.dataLancamento = dataLancamento;
@@ -76,12 +83,16 @@ public class Game {
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
-	public String getProdutora() {
+
+	
+	public Produtora getProdutora() {
 		return produtora;
 	}
-	public void setProdutora(String produtora) {
+
+	public void setProdutora(Produtora produtora) {
 		this.produtora = produtora;
 	}
+
 	public Boolean getFinalizado() {
 		return finalizado;
 	}
@@ -95,16 +106,13 @@ public class Game {
 		this.categoria = categoria;
 	}
 
-	  @Override
-	    public String toString() {
-	        return "ID:" + this.id + ""
-	                + "\nTITULO: " + this.titulo + ""
-	                + "\nPRODUTORA: " + this.produtora + ""
-	                + "\nCATEGORIA: " + this.categoria.getNomeCategoria() + ""
-	                + "\nLANÇAMENTO: " + this.dataLancamento + ""
-	                + "\nFINALIZADO: " + this.finalizado + ""
-	                + "\nVALOR: " + this.valor;
-	    }
+	@Override
+	public String toString() {
+		return "Game [id=" + id + ", titulo=" + titulo + ", dataLancamento=" + dataLancamento + ", valor=" + valor
+				+ ", produtora=" + produtora.getNomePodutora() + ", finalizado=" + finalizado + ", categoria=" + categoria.getNomeCategoria() + "]";
+	}
+
+	
 	
 	
 }

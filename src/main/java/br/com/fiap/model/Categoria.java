@@ -32,7 +32,7 @@ public class Categoria {
 	
 	private Boolean ativo;
 
-	@OneToMany(mappedBy = "categoria" , fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "categoria")
 	private List<Game> game; 
 	
 	

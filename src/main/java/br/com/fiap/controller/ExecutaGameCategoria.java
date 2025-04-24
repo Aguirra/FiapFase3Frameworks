@@ -7,8 +7,10 @@ import java.util.List;
 
 import br.com.fiap.dao.CategoriaDAO;
 import br.com.fiap.dao.GameDAO;
+import br.com.fiap.dao.ProdutoraDAO;
 import br.com.fiap.model.Categoria;
 import br.com.fiap.model.Game;
+import br.com.fiap.model.Produtora;
 import br.com.fiap.utils.Conexao;
 import jakarta.persistence.EntityManager;
 
@@ -20,14 +22,20 @@ public class ExecutaGameCategoria {
 		EntityManager em = Conexao.getEntityManager();
 		
 		//criando uma categoria
+		//Categoria categoria = new Categoria("Aventura", true);
 		Categoria categoria = new Categoria();
-		categoria.setId(6);
+		categoria.setId(8);
 		
-		//Game game1 = new Game("Zelda - Ocarina of Time", LocalDate.of(1992, 8, 1), 159.98, "Nintendo", true, categoria);
+		//Produtora produtora = new Produtora("Nintendo", "Japao");
+		Produtora produtora = new Produtora();
+		produtora.setId(1L);
+		
+		///Game game1 = new Game("Zelda - Ocarina of Time", LocalDate.of(1992, 8, 1), 159.98, produtora, true, categoria);
 		List<Game> listarJogos = new ArrayList<Game>();
 		
 		//criando uma instancia de dao categoria 
 		CategoriaDAO categoriaDAO = new CategoriaDAO(em);
+		ProdutoraDAO produtoraDAO = new ProdutoraDAO(em);
 		GameDAO gameDAO = new GameDAO(em);
 		
 		//Iniciar transacoes sobre o banco de dados
@@ -35,6 +43,8 @@ public class ExecutaGameCategoria {
 		
 		//criando a categoria 
 		//categoriaDAO.salvarCategoria(categoria);
+		
+		//produtoraDAO.salarProdutora(produtora);
 		
 		//categoriaDAO.ativarInativarCategoria(categoria, false);
 		//gameDAO.salvarRegistros(game1);
@@ -60,6 +70,14 @@ public class ExecutaGameCategoria {
 		Categoria listarJogosPorCategoria = categoriaDAO.retornoJogosPorCategoria(categoria);
 		
 		System.out.println(listarJogosPorCategoria.toString());
+		
+		System.out.println("------------------");
+		System.out.println("------------------");
+		System.out.println("------------------");
+		//listando por Produtora
+		
+		Produtora listaJogosPorProdutora = produtoraDAO.retornarJogosPorProdutora(produtora);
+		System.out.println(listaJogosPorProdutora.toString());
 		
 		em.close();
 
