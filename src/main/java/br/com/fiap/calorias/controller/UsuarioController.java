@@ -3,7 +3,6 @@ package br.com.fiap.calorias.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,16 +10,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
 
-import br.com.fiap.calorias.model.Usuario;
+import br.com.fiap.calorias.model.Usuarios;
 import br.com.fiap.calorias.service.UsuarioServices;
 
-@RestController
+
+@RestController 
 @RequestMapping("/api")
 public class UsuarioController {
+
 	
 	@Autowired
 	private UsuarioServices usuarioService;
@@ -28,7 +29,7 @@ public class UsuarioController {
 	
 	@PostMapping("/usuarios")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuario salvarUsuario (@RequestBody Usuario usuario) {
+	public Usuarios salvarUsuario (@RequestBody Usuarios usuario) {
 		
 		return usuarioService.salvarUsuario(usuario);
 		
@@ -36,13 +37,13 @@ public class UsuarioController {
 	
 	@GetMapping("/usuarios")
 	@ResponseStatus(HttpStatus.OK)
-	public List<Usuario> buscarTodosUsuario () {
+	public List<Usuarios> buscarTodosUsuario () {
 		return usuarioService.retornarTodosUsuarios();
 	}
 	
 	
 	@GetMapping("/usuarios/{usuarioId}")
-	public Usuario buscarUsuarioPorId ( @PathVariable Long usuarioId) { 
+	public Usuarios buscarUsuarioPorId ( @PathVariable Long usuarioId) { 
 		return usuarioService.bucarUsuarioPorId(usuarioId);
 	}
 	
@@ -56,12 +57,10 @@ public class UsuarioController {
 	
 	@PutMapping("/usuarios")
 	@ResponseStatus(HttpStatus.OK)
-	public Usuario atualizarUsuario ( @RequestBody Usuario usuario) {
-		
+	public Usuarios atualizarUsuario ( @RequestBody Usuarios usuario) {
+		System.out.println(usuario);
 		return usuarioService.atualizarUsuario(usuario);
 		
 	}
-	
-	
 	
 }
