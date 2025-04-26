@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.fiap.calorias.dto.UsuarioDTO;
 import br.com.fiap.calorias.model.Usuarios;
 import br.com.fiap.calorias.repository.UsuarioRepository;
 
@@ -24,12 +25,13 @@ public class UsuarioServices {
 	
 	
 	//buscar Usuario por ID
-	public Usuarios bucarUsuarioPorId (Long id) {
+	public UsuarioDTO bucarUsuarioPorId (Long id) {
 		
 		Optional<Usuarios> usuarioOpitional = usuarioRepositorio.findById(id);
 		
 		if ( usuarioOpitional.isPresent() ) {
-			return usuarioOpitional.get();
+			
+			return new UsuarioDTO(usuarioOpitional.get());
 		}else {
 			
 			throw new RuntimeException("Usuario nao Existe!");
@@ -38,8 +40,13 @@ public class UsuarioServices {
 	}
 	
 	//Retornar todos os usuarios 
-	public List<Usuarios> retornarTodosUsuarios () {
-		return usuarioRepositorio.findAll();
+	public List<UsuarioDTO> retornarTodosUsuarios () {
+		return usuarioRepositorio
+				.findAll()
+				.stream()
+				.map(UsuarioDTO :: new)
+				.toList()
+				;
 	}
 	
 	//Excluir registro

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
 
+import br.com.fiap.calorias.dto.UsuarioDTO;
 import br.com.fiap.calorias.model.Usuarios;
 import br.com.fiap.calorias.service.UsuarioServices;
 
@@ -37,13 +38,13 @@ public class UsuarioController {
 	
 	@GetMapping("/usuarios")
 	@ResponseStatus(HttpStatus.OK)
-	public List<Usuarios> buscarTodosUsuario () {
+	public List<UsuarioDTO> buscarTodosUsuario () {
 		return usuarioService.retornarTodosUsuarios();
 	}
 	
 	
 	@GetMapping("/usuarios/{usuarioId}")
-	public Usuarios buscarUsuarioPorId ( @PathVariable Long usuarioId) { 
+	public UsuarioDTO buscarUsuarioPorId ( @PathVariable Long usuarioId) { 
 		return usuarioService.bucarUsuarioPorId(usuarioId);
 	}
 	
