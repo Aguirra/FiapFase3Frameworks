@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,33 @@ public class AlimentoController {
         } catch (Exception e){
             return ResponseEntity.notFound().build();
         }
+    }
+   
+    //Buscar Alimento pelo nome 
+    @RequestMapping(value = "/alimentos", params = "nome")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<AlimentoExibicaoDTO> buscarAlimentoPorNome ( @RequestParam String nome){
+
+    	try {
+            return ResponseEntity
+                    .ok(alimentoService.buscarAlimentoPorNome(nome.toUpperCase()));
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
+        }
+    	
+    }
+    
+    //Listar Alimentos por valor total de calorias
+    @RequestMapping(value = "/alimentos", params = {"caloriasMinima", "caloriasMaxima"} )
+    @ResponseStatus(HttpStatus.OK)
+    public List<AlimentoExibicaoDTO> listarAlimentosPorCalorias (
+    		@RequestParam("caloriasMinima") Double valorMinimo, 
+    		@RequestParam("caloriasMaxima") Double maximoValor) { 
+    	
+    	
+    	return alimentoService.buscarPorFaixaCaloria(valorMinimo, maximoValor);
+    	
+    	
     }
 
     @DeleteMapping("/alimentos/{alimentoId}")

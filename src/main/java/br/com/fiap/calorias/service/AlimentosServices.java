@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.fiap.calorias.dto.AlimentoCadastroDTO;
 import br.com.fiap.calorias.dto.AlimentoExibicaoDTO;
+import br.com.fiap.calorias.exception.UsuarioNaoEncontradoException;
 import br.com.fiap.calorias.model.Alimentos;
 import br.com.fiap.calorias.repository.AlimentosRepository;
 
@@ -53,6 +54,33 @@ public class AlimentosServices {
         } else {
             throw new RuntimeException("Alimento não existe!");
         }
+    }
+    
+    //Buscar Alimento por Nome 
+    public AlimentoExibicaoDTO buscarAlimentoPorNome( String nomeAlimento) {
+    	
+    	Optional<Alimentos> retornoAlimentoOptional = alimentoRepository.buscarAlimentoPorNome(nomeAlimento);
+    	
+    	if ( retornoAlimentoOptional.isPresent() ) {
+    		
+    		return new AlimentoExibicaoDTO(retornoAlimentoOptional.get());
+    		
+    	} else {
+    		System.out.println("excecao ");
+    		throw new UsuarioNaoEncontradoException("Alimento nao localizado pelo nome.");
+    	}
+    	
+    }
+    
+
+    
+    //Buscar por faixa de total de caloria 
+    public List<AlimentoExibicaoDTO> buscarPorFaixaCaloria (Double minimoValor, Double maximoValor) {
+    	
+    	return alimentoRepository.buscarAlimentosPorFaixaDeCalorias(minimoValor, maximoValor)
+    			.stream()
+    			.map(AlimentoExibicaoDTO :: new)
+    			.toList();
     }
     
     
