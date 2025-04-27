@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import br.com.fiap.calorias.dto.AlimentoCadastroDTO;
 import br.com.fiap.calorias.dto.AlimentoExibicaoDTO;
 import br.com.fiap.calorias.service.AlimentosServices;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
@@ -28,7 +29,7 @@ public class AlimentoController {
     @PostMapping("/alimentos")
     @ResponseStatus(HttpStatus.CREATED)
     public AlimentoExibicaoDTO salvar(
-            @RequestBody AlimentoCadastroDTO alimento){
+            @RequestBody @Valid AlimentoCadastroDTO alimento){
         return alimentoService.salvarAlimento(alimento);
     }
 
