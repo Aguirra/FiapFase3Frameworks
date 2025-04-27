@@ -13,10 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
-import br.com.fiap.calorias.dto.UsuarioDTO;
-import br.com.fiap.calorias.model.Usuarios;
+import br.com.fiap.calorias.dto.ExibirUsuarioAtualizadoDTO;
+import br.com.fiap.calorias.dto.ExibirUsuarioCriadoDTO;
+import br.com.fiap.calorias.dto.UsuarioAtualizadoDTO;
+import br.com.fiap.calorias.dto.UsuarioCriacaoDTO;
+import br.com.fiap.calorias.dto.UsuarioExibicaoDTO;
 import br.com.fiap.calorias.service.UsuarioServices;
+import jakarta.validation.Valid;
 
 
 @RestController 
@@ -30,22 +35,29 @@ public class UsuarioController {
 	
 	@PostMapping("/usuarios")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Usuarios salvarUsuario (@RequestBody Usuarios usuario) {
+	public ExibirUsuarioCriadoDTO salvarUsuario (@RequestBody @Valid UsuarioCriacaoDTO usuarioDTO) {
 		
-		return usuarioService.salvarUsuario(usuario);
+		return usuarioService.salvarUsuario(usuarioDTO);
 		
 	}
 	
 	@GetMapping("/usuarios")
 	@ResponseStatus(HttpStatus.OK)
-	public List<UsuarioDTO> buscarTodosUsuario () {
+	public List<UsuarioExibicaoDTO> buscarTodosUsuario () {
 		return usuarioService.retornarTodosUsuarios();
 	}
 	
 	
-	@GetMapping("/usuarios/{usuarioId}")
-	public UsuarioDTO buscarUsuarioPorId ( @PathVariable Long usuarioId) { 
+	/*	@GetMapping("/usuarios/{usuarioId}")
+	public UsuarioExibicaoDTO buscarUsuarioPorId ( @PathVariable Long usuarioId) { 
 		return usuarioService.bucarUsuarioPorId(usuarioId);
+	}*/
+	
+	@GetMapping("/usuarios/{usuarioId}")
+	public ResponseEntity<UsuarioExibicaoDTO> buscarUsuarioPorId ( @PathVariable Long usuarioId) { 
+		
+		
+		return ResponseEntity.ok(usuarioService.bucarUsuarioPorId(usuarioId));
 	}
 	
 	
@@ -58,7 +70,7 @@ public class UsuarioController {
 	
 	@PutMapping("/usuarios")
 	@ResponseStatus(HttpStatus.OK)
-	public Usuarios atualizarUsuario ( @RequestBody Usuarios usuario) {
+	public ExibirUsuarioAtualizadoDTO atualizarUsuario ( @RequestBody UsuarioAtualizadoDTO usuario) {
 		System.out.println(usuario);
 		return usuarioService.atualizarUsuario(usuario);
 		

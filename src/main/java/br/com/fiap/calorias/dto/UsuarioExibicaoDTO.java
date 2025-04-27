@@ -2,14 +2,14 @@ package br.com.fiap.calorias.dto;
 
 import br.com.fiap.calorias.model.Usuarios;
 
-public record UsuarioDTO(
+public record UsuarioExibicaoDTO(
 		
-		long usuarioId,
-		String nomeUsuario,
+		long codigo,
+		String nome,
 		String email
 		) {
 	
-	public UsuarioDTO (Usuarios usuarios) {
+	public UsuarioExibicaoDTO (Usuarios usuarios) {
 		
 		this(
 				usuarios.getUsuarioId(),

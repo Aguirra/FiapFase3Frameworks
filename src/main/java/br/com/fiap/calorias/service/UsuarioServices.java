@@ -3,10 +3,16 @@ package br.com.fiap.calorias.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.fiap.calorias.dto.UsuarioDTO;
+import br.com.fiap.calorias.dto.ExibirUsuarioAtualizadoDTO;
+import br.com.fiap.calorias.dto.ExibirUsuarioCriadoDTO;
+import br.com.fiap.calorias.dto.UsuarioAtualizadoDTO;
+import br.com.fiap.calorias.dto.UsuarioCriacaoDTO;
+import br.com.fiap.calorias.dto.UsuarioExibicaoDTO;
+import br.com.fiap.calorias.exception.UsuarioNaoEncontradoException;
 import br.com.fiap.calorias.model.Usuarios;
 import br.com.fiap.calorias.repository.UsuarioRepository;
 
@@ -17,34 +23,54 @@ public class UsuarioServices {
 	private UsuarioRepository usuarioRepositorio;
 	
 	//Criacao de usuario
-	public Usuarios salvarUsuario (Usuarios usuario) { 
+	public ExibirUsuarioCriadoDTO salvarUsuario (UsuarioCriacaoDTO usuarioDTO) { 
 		
-		return usuarioRepositorio.save(usuario);
+		Usuarios usuario = new Usuarios();
+		BeanUtils.copyProperties(usuarioDTO, usuario);
+		
+		Usuarios usuarioSalvo = usuarioRepositorio.save(usuario);
+		
+		return new ExibirUsuarioCriadoDTO(usuarioSalvo);
 		
 	}
 	
+	/*
+	 * 
+	 * 	//Criacao de usuario
+	public UsuarioExibicaoDTO salvarUsuario (UsuarioCriacaoDTO usuarioDTO) { 
+		
+		Usuarios usuario = new Usuarios();
+		BeanUtils.copyProperties(usuarioDTO, usuario);
+		
+		Usuarios usuarioSalvo = usuarioRepositorio.save(usuario);
+		
+		return new UsuarioExibicaoDTO(usuarioSalvo);
+		
+	}
+	 * */
+	
 	
 	//buscar Usuario por ID
-	public UsuarioDTO bucarUsuarioPorId (Long id) {
+	public UsuarioExibicaoDTO bucarUsuarioPorId (Long id) {
 		
 		Optional<Usuarios> usuarioOpitional = usuarioRepositorio.findById(id);
 		
 		if ( usuarioOpitional.isPresent() ) {
 			
-			return new UsuarioDTO(usuarioOpitional.get());
+			return new UsuarioExibicaoDTO(usuarioOpitional.get());
 		}else {
 			
-			throw new RuntimeException("Usuario nao Existe!");
+			throw new UsuarioNaoEncontradoException("Usuário nao encontrado no Cadastro!");
 		}
 		
 	}
 	
 	//Retornar todos os usuarios 
-	public List<UsuarioDTO> retornarTodosUsuarios () {
+	public List<UsuarioExibicaoDTO> retornarTodosUsuarios () {
 		return usuarioRepositorio
 				.findAll()
 				.stream()
-				.map(UsuarioDTO :: new)
+				.map(UsuarioExibicaoDTO :: new)
 				.toList()
 				;
 	}
@@ -64,7 +90,24 @@ public class UsuarioServices {
 	
 	
 	//Atualizacao de registro
-	public Usuarios atualizarUsuario ( Usuarios usuario ) {
+	public ExibirUsuarioAtualizadoDTO atualizarUsuario ( UsuarioAtualizadoDTO usuarioDTO ) {
+		
+		Usuarios usuario = new Usuarios();
+		BeanUtils.copyProperties(usuarioDTO, usuario);
+		
+		Optional<Usuarios> usuarioOptional = usuarioRepositorio.findById(usuario.getUsuarioId());
+		
+		if ( usuarioOptional.isPresent() ) {
+			
+			return new ExibirUsuarioAtualizadoDTO(usuarioRepositorio.save(usuario));
+			
+		}else {
+			throw new RuntimeException("Usuario nao encontrado!");
+		}
+		
+	}
+	
+	/*	public Usuarios atualizarUsuario ( Usuarios usuario ) {
 		
 		Optional<Usuarios> usuarioOptional = usuarioRepositorio.findById(usuario.getUsuarioId());
 		
@@ -74,6 +117,6 @@ public class UsuarioServices {
 			throw new RuntimeException("Usuario nao encontrado!");
 		}
 		
-	}
+	}*/
 	
 }
