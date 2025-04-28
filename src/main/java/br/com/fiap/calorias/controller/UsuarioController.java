@@ -3,6 +3,7 @@ package br.com.fiap.calorias.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,6 +60,16 @@ public class UsuarioController {
 		
 		return ResponseEntity.ok(usuarioService.bucarUsuarioPorId(usuarioId));
 	}
+	
+	//retornar usuarios por dominio de email 
+	@RequestMapping(value = "/usuarios" , params = "dominioEmail")
+	@ResponseStatus(HttpStatus.OK)
+	public List<UsuarioExibicaoDTO> listarUsuariosPorDominio(@Param("dominioEmail") String dominioEmail) {
+		
+		return usuarioService.retornarUariosPorDominioEmail(dominioEmail);
+
+	}
+	
 	
 	
 	@DeleteMapping("/usuarios/{usuarioId}")

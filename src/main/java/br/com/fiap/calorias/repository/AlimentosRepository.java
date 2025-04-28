@@ -19,6 +19,12 @@ public interface AlimentosRepository extends JpaRepository<Alimentos, Long>{
 	
 	
 	//Pesquisa por nome 
-	@Query("SELECT a FROM Alimentos a WHERE a.nome like :nome")
+	@Query("SELECT a FROM Alimentos a WHERE a.nome LIKE CONCAT( '%', :nome, '%' )  ")
 	List<Alimentos> pesquisarAlimentosPorNomes(@Param("nome") String nome);
+	
+	
+	//Pesquisa sobre retornar itens de alimentos menor que uma quantidade determinada 
+	@Query("SELECT a FROM Alimentos a WHERE a.quantidadeGorduras <= :valorMaximo")
+	List<Alimentos> listarAlimentosInferiores (@Param("valorMaximo") Double valorMaximo);
+
 }

@@ -48,6 +48,14 @@ public class UsuarioServices {
 		
 	}
 	 * */
+	//Listar Usuarios por dominios
+	public List<UsuarioExibicaoDTO> retornarUariosPorDominioEmail ( String nomeDominio ) { 
+		
+		return usuarioRepositorio.listarUsuariosPorDominio(nomeDominio)
+				.stream()
+				.map(UsuarioExibicaoDTO :: new) 
+				.toList();
+	}
 	
 	
 	//buscar Usuario por ID

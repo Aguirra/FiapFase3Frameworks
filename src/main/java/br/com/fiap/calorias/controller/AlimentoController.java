@@ -3,6 +3,7 @@ package br.com.fiap.calorias.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,6 +65,23 @@ public class AlimentoController {
         }
     	
     }
+    
+    //Listar nomes de Alimentos Like 
+    @RequestMapping(value = "/alimentos", params = "nomeAlimento")
+    public List<AlimentoExibicaoDTO> listarAlimentos (@RequestParam String nomeAlimento) {
+    	
+    	return alimentoService.listarAlimentosPorNome(nomeAlimento);
+    }
+    
+    
+    //Listar Gorduras menores
+    @RequestMapping(value = "/alimentos", params = "gorduraMaxima") 
+    public List<AlimentoExibicaoDTO> listarGordurasMenores (@RequestParam("gorduraMaxima") Double gorduraMaxima) {
+    	
+    	return alimentoService.listarAlimentosGprdurasMenor(gorduraMaxima);
+    }
+    
+    
     
     //Listar Alimentos por valor total de calorias
     @RequestMapping(value = "/alimentos", params = {"caloriasMinima", "caloriasMaxima"} )

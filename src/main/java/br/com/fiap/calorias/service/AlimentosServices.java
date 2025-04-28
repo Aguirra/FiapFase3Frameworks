@@ -72,7 +72,26 @@ public class AlimentosServices {
     	
     }
     
+    //pesquisar por nomes
+    public List<AlimentoExibicaoDTO> listarAlimentosPorNome (String nome) {
+    	
+    	//List<Alimentos> retornoAlimentos = alimentoRepository.pesquisarAlimentosPorNomes(nome);
 
+    	return alimentoRepository.pesquisarAlimentosPorNomes(nome.toUpperCase())
+    			.stream()
+    			.map(AlimentoExibicaoDTO :: new)
+    			.toList();
+    }
+    
+    //Listar itens menor que um valor 
+    public List<AlimentoExibicaoDTO> listarAlimentosGprdurasMenor( Double quantidade) {
+    	
+    	return alimentoRepository.listarAlimentosInferiores(quantidade)
+    			.stream()
+    			.map(AlimentoExibicaoDTO :: new) 
+    			.toList();
+    }
+    
     
     //Buscar por faixa de total de caloria 
     public List<AlimentoExibicaoDTO> buscarPorFaixaCaloria (Double minimoValor, Double maximoValor) {
