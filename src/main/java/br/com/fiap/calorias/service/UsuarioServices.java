@@ -1,10 +1,12 @@
 package br.com.fiap.calorias.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.spel.ast.OpInc;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.calorias.dto.ExibirUsuarioAtualizadoDTO;
@@ -51,9 +53,19 @@ public class UsuarioServices {
 	//Listar Usuarios por dominios
 	public List<UsuarioExibicaoDTO> retornarUariosPorDominioEmail ( String nomeDominio ) { 
 		
-		return usuarioRepositorio.listarUsuariosPorDominio(nomeDominio)
+		/*		return usuarioRepositorio.listarUsuariosPorDominio(nomeDominio)
 				.stream()
 				.map(UsuarioExibicaoDTO :: new) 
+				.toList();*/
+
+		List<Usuarios> retornoUsuarios = usuarioRepositorio.listarUsuariosPorDominio(nomeDominio);
+		if ( retornoUsuarios.isEmpty()) {
+			throw new UsuarioNaoEncontradoException("Dominio informado não localizado!");
+		}
+		
+		return retornoUsuarios
+				.stream()
+				.map(UsuarioExibicaoDTO::new)
 				.toList();
 	}
 	
@@ -69,6 +81,20 @@ public class UsuarioServices {
 		}else {
 			
 			throw new UsuarioNaoEncontradoException("Usuário nao encontrado no Cadastro!");
+		}
+		
+	}
+	
+	//Retornar usuarios por email 
+	public UsuarioExibicaoDTO buscaUsuariosPorEmail (String email) {
+		
+		Optional<Usuarios> usuariosEmail = usuarioRepositorio.findByEmail(email);
+		
+		if ( usuariosEmail.isPresent() ) {
+			return new UsuarioExibicaoDTO(usuariosEmail.get());
+		}else {
+			
+			throw new UsuarioNaoEncontradoException("Endereço de E-MAIL não localizado.");
 		}
 		
 	}

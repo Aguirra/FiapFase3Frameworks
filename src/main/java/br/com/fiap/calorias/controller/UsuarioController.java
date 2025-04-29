@@ -2,6 +2,7 @@ package br.com.fiap.calorias.controller;
 
 import java.util.List;
 
+import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -68,6 +69,15 @@ public class UsuarioController {
 		
 		return usuarioService.retornarUariosPorDominioEmail(dominioEmail);
 
+	}
+	
+	//Retornar Usuarios por e-mail
+	@RequestMapping(value = "/usuarios", params = "email")
+	@ResponseStatus(HttpStatus.OK)
+	public UsuarioExibicaoDTO retornoUsuariosPorEmail (@Param("email") String email) {
+		
+		return usuarioService.buscaUsuariosPorEmail(email);
+		
 	}
 	
 	
