@@ -102,6 +102,13 @@ public class AlimentosServices {
     			.toList();
     }
     
+    //menor que total calorias
+    public List<AlimentoExibicaoDTO> listarTotalCaloriasMenorQue(Double totalCalorias) {
+    	
+    	return alimentoRepository.findByTotalCaloriasLessThan(totalCalorias);
+    	
+    }
+    
     
     public List<AlimentoExibicaoDTO> listarTodos(){
         return alimentoRepository

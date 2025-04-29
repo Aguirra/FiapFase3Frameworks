@@ -7,7 +7,7 @@ public record AlimentoExibicaoDTO(
 		Long alimentoId,
 		String nome,
 		String porcao,
-		Double quantidadeProteirna,
+		Double quantidadeProteina,
 		Double quantidadeCarboidrato,
 		Double quantidadeGorduras,
 		Double totalCalorias

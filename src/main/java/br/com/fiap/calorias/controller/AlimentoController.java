@@ -95,6 +95,14 @@ public class AlimentoController {
     	
     	
     }
+    
+    // Listar calorias menor que 
+    @RequestMapping(value="/alimentos" , params = "caloriasMenorQue")
+    @ResponseStatus(HttpStatus.OK)
+    public List<AlimentoExibicaoDTO> listarCaloriasMenorQue ( @RequestParam Double caloriasMenorQue) {
+    	
+    	return alimentoService.listarTotalCaloriasMenorQue(caloriasMenorQue);
+    }
 
     @DeleteMapping("/alimentos/{alimentoId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

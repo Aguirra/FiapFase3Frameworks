@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import br.com.fiap.calorias.dto.AlimentoExibicaoDTO;
 import br.com.fiap.calorias.model.Alimentos;
 
 public interface AlimentosRepository extends JpaRepository<Alimentos, Long>{
@@ -26,5 +27,8 @@ public interface AlimentosRepository extends JpaRepository<Alimentos, Long>{
 	//Pesquisa sobre retornar itens de alimentos menor que uma quantidade determinada 
 	@Query("SELECT a FROM Alimentos a WHERE a.quantidadeGorduras <= :valorMaximo")
 	List<Alimentos> listarAlimentosInferiores (@Param("valorMaximo") Double valorMaximo);
+	
+	//busca por totalCaloria lessTahn (menor que o valor informado)
+	List<AlimentoExibicaoDTO> findByTotalCaloriasLessThan(Double totalCalorias);
 
 }
