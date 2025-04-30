@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.expression.spel.ast.OpInc;
 import org.springframework.stereotype.Service;
 
@@ -107,6 +109,12 @@ public class UsuarioServices {
 				.map(UsuarioExibicaoDTO :: new)
 				.toList()
 				;
+	}
+	
+	//retorno por paginacao 
+	public Page<UsuarioExibicaoDTO> listarUsuariosPorPaginas( Pageable paginacao ) {
+		return usuarioRepositorio.findAll(paginacao).map(UsuarioExibicaoDTO::new);
+		
 	}
 	
 	//Excluir registro

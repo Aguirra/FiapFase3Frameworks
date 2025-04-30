@@ -3,7 +3,10 @@ package br.com.fiap.calorias.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +42,17 @@ public class AlimentoController {
     @ResponseStatus(HttpStatus.OK)
     public List<AlimentoExibicaoDTO> litarTodos(){
         return alimentoService.listarTodos();
+    }
+    
+    //listar todos Paginado
+    
+    @RequestMapping(value = "/alimentos" , params = "paginacao")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<AlimentoExibicaoDTO> listarTodosPaginado ( 
+    		@PageableDefault(size = 2, page = 0)
+    		Pageable paginacao ) {
+    	
+    	return alimentoService.listarTodosPorPaginacao(paginacao);
     }
 
     @GetMapping("/alimentos/{alimentoId}")

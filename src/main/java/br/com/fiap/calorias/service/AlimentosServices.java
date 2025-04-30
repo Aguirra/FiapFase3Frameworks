@@ -1,5 +1,6 @@
 package br.com.fiap.calorias.service;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +9,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import br.com.fiap.calorias.dto.AlimentoCadastroDTO;
 import br.com.fiap.calorias.dto.AlimentoExibicaoDTO;
@@ -116,6 +119,15 @@ public class AlimentosServices {
                 .stream()
                 .map(AlimentoExibicaoDTO::new)
                 .toList();
+    }
+    
+    //retornando Paginacao 
+    public Page<AlimentoExibicaoDTO> listarTodosPorPaginacao (Pageable paginacao) {
+    	
+    	return alimentoRepository
+    			.findAll(paginacao)
+    			.map(AlimentoExibicaoDTO :: new);
+    	
     }
     
     
