@@ -57,6 +57,8 @@ public class UsuarioController {
 	//retornar usuarios por paginacao 
 	@RequestMapping(value = "/usuarios", params = "paginacao")
 	@ResponseStatus(HttpStatus.OK)
+	// forma de busca na chamada 
+	//usuarios?paginacao&sort=nome,ASC&size=10
 	public Page<UsuarioExibicaoDTO> listarUsuariosPaginados (
 			//colocando pesquisa default
 			@PageableDefault(size=5, page = 0)
