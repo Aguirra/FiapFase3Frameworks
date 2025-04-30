@@ -30,6 +30,7 @@ public class AuthController {
 	@Autowired
 	private UsuarioServices usuarioServico;
 	
+	@PostMapping("/login")
 	public ResponseEntity login (
 			
 			@RequestBody

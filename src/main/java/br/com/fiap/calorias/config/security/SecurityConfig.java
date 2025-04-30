@@ -29,8 +29,11 @@ public class SecurityConfig {
 								)
 						)
 				.authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/alimentos")
-                        .hasRole("ADMIN")
+						//.requestMatchers(HttpMethod.GET, "/api").permitAll()
+						//.requestMatchers(HttpMethod.GET, "/api/usuarios").permitAll()
+						.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+						.requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/alimentos").hasRole("ADMIN")
                         .anyRequest().authenticated() //força o usuarios estarem logados 
 						)
 				.build();
