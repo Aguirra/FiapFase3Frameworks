@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.expression.spel.ast.OpInc;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.fiap.calorias.dto.ExibirUsuarioAtualizadoDTO;
@@ -27,10 +28,18 @@ public class UsuarioServices {
 	private UsuarioRepository usuarioRepositorio;
 	
 	//Criacao de usuario
+
 	public ExibirUsuarioCriadoDTO salvarUsuario (UsuarioCriacaoDTO usuarioDTO) { 
+		
+		//Gerando senha para criptografia
+		String senhaCriptografada = new 
+				BCryptPasswordEncoder().encode(usuarioDTO.senha());
 		
 		Usuarios usuario = new Usuarios();
 		BeanUtils.copyProperties(usuarioDTO, usuario);
+		
+		//atualizando a criptografia para gravar no banco 
+		usuario.setSenha(senhaCriptografada);
 		
 		Usuarios usuarioSalvo = usuarioRepositorio.save(usuario);
 		
