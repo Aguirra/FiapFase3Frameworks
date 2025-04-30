@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import br.com.fiap.calorias.model.Usuarios;
 
@@ -17,7 +18,9 @@ public interface UsuarioRepository extends JpaRepository<Usuarios, Long>{
 	List<Usuarios> listarUsuariosPorDominio (@Param("dominioEmail") String dominioEmail) ;
 	//Optional<Usuarios> listarUsuariosPorDominio (@Param("dominioEmail") String dominioEmail) ;
 	
+	//cancelado o Option devido a autenticação
+	//Optional<Usuarios> findByEmail (String email);
 	
-	Optional<Usuarios> findByEmail (String email);
+	UserDetails findByEmail(String email);
 
 }

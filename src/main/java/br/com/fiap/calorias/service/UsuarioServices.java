@@ -88,6 +88,8 @@ public class UsuarioServices {
 	}
 	
 	//Retornar usuarios por email 
+	// cancelado para retorno de autenticação
+	/*
 	public UsuarioExibicaoDTO buscaUsuariosPorEmail (String email) {
 		
 		Optional<Usuarios> usuariosEmail = usuarioRepositorio.findByEmail(email);
@@ -100,6 +102,7 @@ public class UsuarioServices {
 		}
 		
 	}
+	*/
 	
 	//Retornar todos os usuarios 
 	public List<UsuarioExibicaoDTO> retornarTodosUsuarios () {

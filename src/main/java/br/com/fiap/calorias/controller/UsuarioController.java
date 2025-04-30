@@ -90,6 +90,7 @@ public class UsuarioController {
 	}
 	
 	//Retornar Usuarios por e-mail
+	/*
 	@RequestMapping(value = "/usuarios", params = "email")
 	@ResponseStatus(HttpStatus.OK)
 	public UsuarioExibicaoDTO retornoUsuariosPorEmail (@RequestParam String email) {
@@ -97,7 +98,7 @@ public class UsuarioController {
 		return usuarioService.buscaUsuariosPorEmail(email);
 		
 	}
-	
+	*/
 	
 	
 	@DeleteMapping("/usuarios/{usuarioId}")

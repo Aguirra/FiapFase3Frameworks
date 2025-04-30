@@ -1,9 +1,17 @@
 package br.com.fiap.calorias.model;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,7 +20,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TBL_USUARIOS")
-public class Usuarios {
+public class Usuarios implements UserDetails {
 	
 	@Id
 	@GeneratedValue(
@@ -30,6 +38,9 @@ public class Usuarios {
 	private String nome;
 	private String email;
 	private String senha;
+	
+	@Enumerated(EnumType.STRING)
+	private UsuarioRole role;
 	
 	public Usuarios () {} 
 	
@@ -66,8 +77,19 @@ public class Usuarios {
 		this.senha = senha;
 	}
 
+	
+	
 
 
+
+	public UsuarioRole getRole() {
+		return role;
+	}
+
+
+	public void setRole(UsuarioRole role) {
+		this.role = role;
+	}
 
 
 	@Override
@@ -93,6 +115,39 @@ public class Usuarios {
 		Usuarios other = (Usuarios) obj;
 		return Objects.equals(email, other.email) && Objects.equals(nome, other.nome)
 				&& Objects.equals(senha, other.senha) && Objects.equals(usuarioId, other.usuarioId);
+	}
+
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		
+		if ( this.role == UsuarioRole.ADMIN ) {
+			
+			return List.of(
+					new SimpleGrantedAuthority("ROLE_ADMIN"),
+					new SimpleGrantedAuthority("ROLE_USER")
+					);	
+		}else {
+			
+			return List.of (
+					new SimpleGrantedAuthority("ROLE_USER")
+					);
+		}
+		
+	}
+
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return this.senha;
+	}
+
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.email;
 	}
 
 
