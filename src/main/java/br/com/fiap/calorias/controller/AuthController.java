@@ -49,7 +49,7 @@ public class AuthController {
 		
 		Authentication auth = autenthicateManager.authenticate(userNamePassword);
 		
-		System.out.println(auth);
+		//System.out.println(auth); // 
 		return ResponseEntity.ok().build();
 
 	}
