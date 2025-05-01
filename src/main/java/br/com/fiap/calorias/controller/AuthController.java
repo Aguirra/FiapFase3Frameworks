@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import br.com.fiap.calorias.dto.ExibirUsuarioCriadoDTO;
+import br.com.fiap.calorias.dto.LoginDTO;
 import br.com.fiap.calorias.dto.UsuarioCriacaoDTO;
 import br.com.fiap.calorias.dto.UsuarioExibicaoDTO;
 import br.com.fiap.calorias.service.UsuarioServices;
@@ -35,7 +36,7 @@ public class AuthController {
 			
 			@RequestBody
 			@Valid
-			UsuarioCriacaoDTO usuariosCadDto
+			LoginDTO usuariosCadDto
 			
 			) {
 		UsernamePasswordAuthenticationToken userNamePassword = 
@@ -48,6 +49,7 @@ public class AuthController {
 		
 		Authentication auth = autenthicateManager.authenticate(userNamePassword);
 		
+		System.out.println(auth);
 		return ResponseEntity.ok().build();
 
 	}
