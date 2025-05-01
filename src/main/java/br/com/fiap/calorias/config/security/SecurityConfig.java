@@ -38,7 +38,13 @@ public class SecurityConfig {
 						//.requestMatchers(HttpMethod.GET, "/api/usuarios").permitAll()
 						.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 						.requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/alimentos").hasRole("ADMIN")
+						
+                        .requestMatchers(HttpMethod.POST, "/api/alimentos").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/alimentos/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/alimentos").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/alimentos").hasAnyRole("ADMIN", "USER")
+
+                        
                         .anyRequest().authenticated() //força o usuarios estarem logados 
 						)
 
