@@ -1,5 +1,8 @@
 package br.com.fiap.calorias.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import br.com.fiap.calorias.config.security.TokenService;
 import br.com.fiap.calorias.dto.ExibirUsuarioCriadoDTO;
 import br.com.fiap.calorias.dto.LoginDTO;
+import br.com.fiap.calorias.dto.TokenDto;
 import br.com.fiap.calorias.dto.UsuarioCriacaoDTO;
 import br.com.fiap.calorias.dto.UsuarioExibicaoDTO;
+import br.com.fiap.calorias.model.Usuarios;
 import br.com.fiap.calorias.service.UsuarioServices;
 import jakarta.validation.Valid;
+import netscape.javascript.JSObject;
 
 @RestController
 @RequestMapping("/auth")
@@ -31,6 +38,10 @@ public class AuthController {
 	@Autowired
 	private UsuarioServices usuarioServico;
 	
+	
+	@Autowired
+	private TokenService tokenService;
+	
 	@PostMapping("/login")
 	public ResponseEntity login (
 			
@@ -39,6 +50,8 @@ public class AuthController {
 			LoginDTO usuariosCadDto
 			
 			) {
+		DateTimeFormatter dataFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		Usuarios user = null;
 		UsernamePasswordAuthenticationToken userNamePassword = 
 				new UsernamePasswordAuthenticationToken(
 						
@@ -49,8 +62,19 @@ public class AuthController {
 		
 		Authentication auth = autenthicateManager.authenticate(userNamePassword);
 		
-		//System.out.println(auth); // 
-		return ResponseEntity.ok().build();
+		String token = tokenService.gerarToken( (Usuarios) auth.getPrincipal());
+		
+		user = (Usuarios) auth.getPrincipal();
+		
+		
+		return ResponseEntity.ok( 
+				
+				new TokenDto( 
+						user.getNome(), 
+						LocalDateTime.now().format(dataFormat).toString(),
+						token
+						)
+				);
 
 	}
 	
